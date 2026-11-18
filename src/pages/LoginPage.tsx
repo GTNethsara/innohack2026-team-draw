@@ -74,7 +74,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
       setError(
         err instanceof Error
           ? err.message
-          : 'Invalid credentials. Please check your Student ID and Registration Code.'
+          : 'Invalid credentials. Please check your NIC Number and Registration Code.'
       );
     } finally {
       setLoading(false);
@@ -114,7 +114,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             transition={{ delay: 0.14 }}
             className="mt-2 font-display text-lg sm:text-2xl font-bold tracking-[0.16em] uppercase"
           >
-            <span className="text-white">TEAM LEADER </span>
+            <span className="text-white">OFFICIAL </span>
             <span className="text-inno-gradient">LIVE SPIN PORTAL</span>
           </motion.div>
 
@@ -125,7 +125,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             className="mx-auto mt-4 max-w-2xl text-sm sm:text-base text-[#8AA2BE] leading-relaxed"
           >
             Authorized portal for the <strong className="text-white">30 registered squad leaders</strong> of
-            INNOHACK Season 2026. Authenticate with your dual credentials to enter the global FIFO queue and
+            INNOHACK Season 2026. Authenticate with your dual credentials to enter the official spin lineup and
             spin for your official competition group.
           </motion.p>
 
@@ -136,7 +136,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
               { icon: Layers, label: 'GROUP STRUCTURE', value: '3 × 10 Slots' },
               {
                 icon: Radio,
-                label: 'LIVE FIFO QUEUE',
+                label: 'LIVE LIST',
                 value: `${publicStatus?.activeQueueCount ?? 0} Active`,
               },
               {
@@ -213,7 +213,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                     htmlFor="studentId"
                     className="block font-display text-[11px] font-semibold tracking-[0.18em] text-[#A4BCD6] uppercase mb-2"
                   >
-                    1. Team Leader Student ID Number
+                    1. Team Leader NIC Number
                   </label>
                   <div className="relative">
                     <Hash className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#00E1FF]" />
@@ -228,7 +228,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                         setStudentId(e.target.value);
                         if (error) setError(null);
                       }}
-                      placeholder="Enter your 12-digit Student ID (e.g. 200426604486)"
+                      placeholder="Enter your NIC Number (e.g. 200426604486)"
                       className="w-full rounded-xl border border-[#183556] bg-[#06101E] py-3.5 pl-11 pr-4 font-mono text-sm text-white placeholder-[#4C6887] outline-none transition focus:border-[#00E1FF] focus:ring-2 focus:ring-[#00E1FF]/20"
                       disabled={loading}
                       required
@@ -335,7 +335,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
             {/* What You'll Need Card (mirroring reference Register section left card) */}
             <HudCard className="p-6">
               <div className="font-display text-xs font-bold tracking-[0.2em] text-white uppercase">
-                HOW THE LIVE FIFO DRAW WORKS
+                HOW THE LIVE DRAW WORKS
               </div>
               <ul className="mt-4 space-y-3.5 text-xs sm:text-sm text-[#95AEC9]">
                 {[
@@ -346,8 +346,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   },
                   {
                     step: '02',
-                    title: 'Enter Global FIFO Queue',
-                    desc: 'Server transactions assign strictly ordered queue numbers — no skipping.',
+                    title: 'Enter Global List',
+                    desc: 'Server transactions assign strictly ordered numbers — no skipping.',
                   },
                   {
                     step: '03',
@@ -357,7 +357,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
                   {
                     step: '04',
                     title: 'Spin & Download Slip',
-                    desc: 'Server selects an open group (10/10/10 fair split) and generates your official PDF & CSV.',
+                    desc: 'Server selects an open group (10/10/10 fair split) and generates your official PDF.',
                   },
                 ].map((row) => (
                   <li key={row.step} className="flex items-start gap-3">

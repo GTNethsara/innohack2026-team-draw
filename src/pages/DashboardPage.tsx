@@ -180,7 +180,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       <div className="mx-auto flex min-h-[65vh] max-w-7xl flex-col items-center justify-center px-4">
         <Loader2 className="h-10 w-10 animate-spin text-[#00E1FF]" />
         <p className="mt-4 font-display text-xs tracking-[0.22em] text-[#8AA2BE] uppercase">
-          SYNCHRONIZING LIVE FIFO ARENA STATE...
+          SYNCHRONIZING LIVE ARENA STATE...
         </p>
       </div>
     );
@@ -204,7 +204,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     ? { label: 'YOUR TURN — SPIN ACTIVE', color: 'text-[#00E1FF] border-[#00E1FF]/50 bg-[#00E1FF]/15 animate-pulse' }
     : team.queueStatus === 'WAITING'
     ? { label: `IN QUEUE · POSITION #${queueMetrics.position ?? '?'}`, color: 'text-amber-300 border-amber-400/40 bg-amber-500/15' }
-    : { label: 'READY TO JOIN QUEUE', color: 'text-sky-300 border-sky-400/35 bg-sky-500/10' };
+    : { label: 'READY TO JOIN List', color: 'text-sky-300 border-sky-400/35 bg-sky-500/10' };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -215,7 +215,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <WifiOff className="h-4 w-4 shrink-0 text-amber-400 animate-pulse" />
             <span>
               <strong>Temporary connection interruption detected.</strong> Your login session and
-              FIFO queue position are safely preserved on the server while reconnecting...
+              position are safely preserved on the server while reconnecting...
             </span>
           </div>
           <Loader2 className="h-4 w-4 shrink-0 animate-spin text-amber-300" />
@@ -239,7 +239,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
 
             <h1 className="mt-3 font-display text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase">
-              WELCOME, <span className="text-inno-gradient">TEAM LEADER</span>
+              WELCOME
             </h1>
 
             <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs sm:text-sm text-[#8AA2BE]">
@@ -247,7 +247,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 Squad: <strong className="font-display text-white">{team.teamId}</strong> ({team.teamName})
               </span>
               <span>
-                Student ID: <strong className="font-mono text-[#00E1FF]">{team.studentId}</strong>
+                NIC Number: <strong className="font-mono text-[#00E1FF]">{team.studentId}</strong>
               </span>
               <span>
                 Reg Code: <strong className="font-mono text-white">{team.maskedRegistrationCode}</strong>
@@ -292,7 +292,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               : queueMetrics.position
               ? `#${queueMetrics.position}`
               : 'NOT JOINED',
-            sub: team.queueNumber ? `FIFO Ticket #${team.queueNumber}` : 'Click Join to enter',
+            sub: team.queueNumber ? `Ticket #${team.queueNumber}` : 'Click Join to enter',
             accent: team.queueStatus === 'ACTIVE' ? 'text-[#00E1FF]' : 'text-white',
             icon: Radio,
           },
@@ -311,7 +311,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 ? 'Updates live in real time'
                 : team.queueStatus === 'ACTIVE'
                 ? 'Spin wheel unlocked'
-                : `${queueMetrics.totalInQueue} active in FIFO line`,
+                : `${queueMetrics.totalInQueue} active in line`,
             accent: team.queueStatus === 'ACTIVE' ? 'text-emerald-400' : 'text-[#00E1FF]',
             icon: Hourglass,
           },
@@ -365,10 +365,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <HudCard highlight className="p-6 sm:p-10 text-center">
               <span className="section-kicker">STEP 01 · GLOBAL FIFO ADMISSION</span>
               <h2 className="mt-3 font-display text-2xl sm:text-4xl font-extrabold tracking-wider text-white uppercase">
-                ENTER THE LIVE <span className="text-inno-gradient">DRAW QUEUE</span>
+                ENTER THE LIVE <span className="text-inno-gradient">DRAW</span>
               </h2>
               <p className="mx-auto mt-3 max-w-2xl text-sm text-[#8AA2BE] leading-relaxed">
-                Click the button below to claim your atomic server-assigned FIFO queue position.
+                Click the button below to claim your atomic server-assigned List position.
                 Earlier entrants always spin first. Once your turn arrives, your personal live
                 spinning wheel will automatically activate on this screen.
               </p>
@@ -378,7 +378,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 <div className="mx-auto mt-6 flex max-w-lg items-center justify-center gap-2.5 rounded-xl border border-amber-400/45 bg-amber-500/10 px-4 py-3 text-xs sm:text-sm text-amber-200">
                   <PauseCircle className="h-5 w-5 shrink-0 text-amber-400" />
                   <span>
-                    Queue admissions are currently paused by the Hackathon Organizers. Please stay
+                    admissions are currently paused by the Hackathon Organizers. Please stay
                     on this screen — it will unlock automatically when resumed.
                   </span>
                 </div>
@@ -401,18 +401,18 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   {joining ? (
                     <>
                       <Loader2 className="h-5 w-5 animate-spin" />
-                      SECURING FIFO POSITION...
+                      SECURING POSITION...
                     </>
                   ) : (
                     <>
                       <Zap className="h-5 w-5 fill-[#04101E]" />
-                      JOIN THE DRAW QUEUE
+                      JOIN THE DRAW
                       <ArrowRight className="h-5 w-5" />
                     </>
                   )}
                 </button>
                 <span className="text-[11px] text-[#6B88A6]">
-                  Strictly 1 queue entry &amp; 1 official spin per squad · Protected by Firestore atomic transactions
+                  Strictly 1 entry &amp; 1 official spin per squad · Protected by Firestore atomic transactions
                 </span>
               </div>
             </HudCard>
@@ -432,21 +432,21 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   </div>
 
                   <h2 className="mt-4 font-display text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase">
-                    YOU ARE <span className="text-inno-gradient">#{queueMetrics.position}</span> IN THE LIVE QUEUE
+                    YOU ARE <span className="text-inno-gradient">#{queueMetrics.position}</span> IN THE LIVE
                   </h2>
 
                   <p className="mt-2 text-sm text-[#8AA2BE] leading-relaxed">
                     Stay right here — your personal spinning wheel will activate automatically the instant
                     the {queueMetrics.aheadCount === 1 ? 'squad' : `${queueMetrics.aheadCount} squads`} ahead
                     of you complete {queueMetrics.aheadCount === 1 ? 'its' : 'their'} draw. Refreshing this
-                    page will preserve your exact queue position.
+                    page will preserve your exact position.
                   </p>
 
                   {/* Queue Ticket Strip */}
                   <div className="mt-6 grid grid-cols-3 gap-3">
                     <div className="rounded-xl border border-[#18385A] bg-[#06111F] p-4 text-center">
                       <div className="font-display text-[9px] tracking-[0.18em] text-[#6E8BA8] uppercase">
-                        FIFO TICKET
+                        TICKET
                       </div>
                       <div className="mt-1 font-display text-2xl font-black text-[#00E1FF]">
                         #{team.queueNumber}
@@ -474,7 +474,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   <div className="mt-6">
                     <div className="flex items-center justify-between text-xs mb-2">
                       <span className="font-display text-[10px] tracking-[0.18em] text-[#8AA2BE] uppercase">
-                        LIVE QUEUE PROGRESSION
+                        LIVE PROGRESSION
                       </span>
                       <span className="font-mono text-[#00E1FF]">{queueMetrics.progressPct}%</span>
                     </div>
@@ -565,7 +565,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <div className="flex items-center gap-2">
               <Radio className="h-4 w-4 text-[#00E1FF] animate-pulse" />
               <h3 className="font-display text-xs sm:text-sm font-bold tracking-[0.18em] text-white uppercase">
-                GLOBAL FIFO QUEUE ({activeQueue.length})
+                GLOBAL List ({activeQueue.length})
               </h3>
             </div>
             <span className="font-mono text-[10px] text-[#6E8CA8] uppercase">
@@ -575,7 +575,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
           {activeQueue.length === 0 ? (
             <div className="py-10 text-center text-xs text-[#6B88A6]">
-              No squads currently waiting in the active queue.
+              No squads currently waiting in the active list.
             </div>
           ) : (
             <div className="mt-3 max-h-[320px] space-y-2 overflow-y-auto pr-1">

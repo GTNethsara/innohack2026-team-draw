@@ -27,12 +27,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onOpenTeamLogin }) 
             <InnoHackLogo compact />
             <p className="mt-4 max-w-xs text-xs leading-relaxed text-[#7E98B5]">
               Inter-University AI Hackathon hosted by the Kandy UNI Students, Faculty of Computing.
-              Official server-authoritative FIFO live group allocation portal for all 30 registered squads.
+              Official server-authoritative live group allocation portal for all 30 registered squads.
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 rounded-md border border-[#142D48] bg-[#081423] px-2.5 py-1 text-[10px] font-mono text-[#7393B3]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00E1FF]" />
-              {BACKEND_MODE_LABEL}
-            </div>
+            
           </div>
 
           {/* Navigation Column */}
@@ -47,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onOpenTeamLogin }) 
                   onClick={onOpenTeamLogin}
                   className="hover:text-[#00E1FF] transition"
                 >
-                  Team Leader Login &amp; Live Queue
+                  Team Leader Login &amp; Live List
                 </button>
               </li>
               <li>
@@ -100,7 +97,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onOpenTeamLogin }) 
           <div className="flex items-center gap-6">
             <span className="inline-flex items-center gap-1.5 text-[#7CA0C2]">
               <ShieldCheck className="h-3.5 w-3.5 text-[#00E1FF]" />
-              Secured FIFO Allocation
+              Secured Allocation
             </span>
             <button
               type="button"

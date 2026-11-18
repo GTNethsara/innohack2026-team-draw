@@ -20,21 +20,30 @@ const COLORS = {
   tint: [241, 247, 254] as [number, number, number],
 };
 
-function drawInnoHackLogoMark(doc: jsPDF, x: number, y: number, size: number): void {
-  // Stylized geometric delta 'A' mark inspired by official INNOHACK logo
+async function loadLogoDataUrl(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    return await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
+function drawFallbackLogoMark(doc: jsPDF, x: number, y: number, size: number): void {
   doc.setFillColor(...COLORS.blue);
   doc.triangle(x + size * 0.5, y, x + size, y + size, x + size * 0.72, y + size, 'F');
   doc.setFillColor(...COLORS.cyan);
   doc.triangle(x + size * 0.5, y, x + size * 0.28, y + size, x, y + size, 'F');
-  // Orbital swoosh
-  doc.setDrawColor(...COLORS.cyan);
-  doc.setLineWidth(0.9);
-  doc.line(x + size * 0.08, y + size * 0.78, x + size * 0.96, y + size * 0.34);
-  doc.setFillColor(...COLORS.cyan);
-  doc.circle(x + size * 0.96, y + size * 0.34, 1.2, 'F');
 }
 
-function drawBrandedHeader(doc: jsPDF, subtitle: string): void {
+function drawBrandedHeader(doc: jsPDF, subtitle: string, logoDataUrl: string | null): void {
   const pageWidth = doc.internal.pageSize.getWidth();
   // Dark cyber navy top banner
   doc.setFillColor(...COLORS.navy);
@@ -46,8 +55,12 @@ function drawBrandedHeader(doc: jsPDF, subtitle: string): void {
   doc.setFillColor(...COLORS.cyan);
   doc.rect(pageWidth * 0.5, 38, pageWidth * 0.5, 1.5, 'F');
 
-  // Vector logo mark
-  drawInnoHackLogoMark(doc, 14, 10, 16);
+  // Custom INNOHACK logo image (falls back safely if image isn't found)
+  if (logoDataUrl) {
+    doc.addImage(logoDataUrl, 'PNG', 14, 10, 17, 17);
+  } else {
+    drawFallbackLogoMark(doc, 14, 10, 16);
+  }
 
   // Title text
   doc.setTextColor(...COLORS.white);
@@ -92,7 +105,7 @@ function drawFooter(doc: jsPDF): void {
     doc.setFontSize(7.5);
     doc.setTextColor(100, 118, 140);
     doc.text(
-      `INNOHACK Season 2026 · SLIIT Kandy Uni · Server-Authoritative FIFO Draw · Generated: ${generated}`,
+      `INNOHACK Season 2026 · SLIIT Kandy Uni · Server-Authoritative Live Draw · Generated: ${generated}`,
       14,
       pageHeight - 9.5
     );
@@ -101,13 +114,14 @@ function drawFooter(doc: jsPDF): void {
 }
 
 /**
- * Team Leader Official Allocation Slip PDF
+ * Squad Official Allocation Slip PDF
  */
-export function downloadTeamAllocationPdf(team: TeamRecord): void {
+export async function downloadTeamAllocationPdf(team: TeamRecord): Promise<void> {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
+  const logoDataUrl = await loadLogoDataUrl('/innohack-logo.png');
 
-  drawBrandedHeader(doc, 'TEAM LEADER LIVE GROUP ALLOCATION CERTIFICATE');
+  drawBrandedHeader(doc, 'SQUAD LIVE GROUP ALLOCATION CERTIFICATE', logoDataUrl);
 
   // Big Group Highlight Card
   doc.setFillColor(...COLORS.navySurface);
@@ -166,12 +180,12 @@ export function downloadTeamAllocationPdf(team: TeamRecord): void {
     head: [['Field', 'Verified Allocation Record']],
     body: [
       ['Event Name', 'INNOHACK Season 2026 — SLIIT Kandy Uni Inter-University Hackathon'],
-      ['Team Identifier', `${team.teamId} (${team.teamName})`],
-      ['Team Leader Student ID', team.studentId],
+      ['Squad Identifier', `${team.teamId} (${team.teamName})`],
+      ['NIC Number', team.studentId],
       ['Registration Code (Masked)', team.maskedRegistrationCode],
       ['Assigned Group', (team.assignedGroupName || team.assignedGroup || 'Unassigned').toUpperCase()],
       ['Draw Completion Status', team.drawCompleted ? 'CONFIRMED & LOCKED (PERMANENT)' : 'PENDING'],
-      ['FIFO Queue Sequence #', team.queueNumber ? `#${team.queueNumber}` : 'N/A'],
+      ['Live Queue Sequence #', team.queueNumber ? `#${team.queueNumber}` : 'N/A'],
       ['Official Draw Order', team.drawOrder ? `#${team.drawOrder} of 30` : 'N/A'],
       ['Allocation Date & Time', formatAllocationTimestamp(team.allocatedAt)],
     ],
@@ -199,12 +213,12 @@ export function downloadTeamAllocationPdf(team: TeamRecord): void {
     finalY + 24.5
   );
   doc.text(
-    'remaining open groups (max 10 teams per group) in strict FIFO queue order and permanently stored',
+    'remaining open groups (max 10 teams per group) in strict live draw queue order and permanently stored',
     19,
     finalY + 29.5
   );
   doc.text(
-    'in the official INNOHACK 2026 database. Present this slip alongside your Student ID at check-in.',
+    'in the official INNOHACK 2026 database. Present this slip alongside your NIC / Student ID at check-in.',
     19,
     finalY + 34.5
   );
@@ -216,11 +230,12 @@ export function downloadTeamAllocationPdf(team: TeamRecord): void {
 /**
  * Admin Complete Group Allocation PDF Report (All 3 Groups + Summary)
  */
-export function downloadAdminCompletePdf(snapshot: AdminSnapshot): void {
+export async function downloadAdminCompletePdf(snapshot: AdminSnapshot): Promise<void> {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
+  const logoDataUrl = await loadLogoDataUrl('/innohack-logo.png');
 
-  drawBrandedHeader(doc, 'COMPLETE GROUP ALLOCATION MASTER REPORT (ALL 30 TEAMS)');
+  drawBrandedHeader(doc, 'COMPLETE GROUP ALLOCATION MASTER REPORT (ALL 30 TEAMS)', logoDataUrl);
 
   const groupMap = Object.fromEntries(snapshot.groups.map((g) => [g.groupId, g]));
   const countA = groupMap.GROUP_A?.teamCount ?? 0;
@@ -278,7 +293,7 @@ export function downloadAdminCompletePdf(snapshot: AdminSnapshot): void {
 
     if (cursorY > 235) {
       doc.addPage();
-      drawBrandedHeader(doc, 'COMPLETE GROUP ALLOCATION MASTER REPORT (CONT.)');
+      drawBrandedHeader(doc, 'COMPLETE GROUP ALLOCATION MASTER REPORT (CONT.)', logoDataUrl);
       cursorY = 48;
     }
 
@@ -315,7 +330,7 @@ export function downloadAdminCompletePdf(snapshot: AdminSnapshot): void {
       },
       alternateRowStyles: { fillColor: COLORS.tint },
       head: [
-        ['#', 'Draw Order', 'Team ID', 'Team Leader Student ID', 'Masked Reg Code', 'Allocation Timestamp'],
+        ['#', 'Draw Order', 'Squad ID', 'NIC Number', 'Masked Reg Code', 'Allocation Timestamp'],
       ],
       body:
         assignedTeams.length > 0
@@ -340,7 +355,7 @@ export function downloadAdminCompletePdf(snapshot: AdminSnapshot): void {
   if (pendingTeams.length > 0) {
     if (cursorY > 235) {
       doc.addPage();
-      drawBrandedHeader(doc, 'PENDING TEAMS SUMMARY');
+      drawBrandedHeader(doc, 'PENDING TEAMS SUMMARY', logoDataUrl);
       cursorY = 48;
     }
     doc.setFont('helvetica', 'bold');
@@ -354,7 +369,7 @@ export function downloadAdminCompletePdf(snapshot: AdminSnapshot): void {
       theme: 'grid',
       headStyles: { fillColor: [60, 78, 98], textColor: COLORS.white, fontSize: 8 },
       bodyStyles: { fontSize: 8, cellPadding: 2.5 },
-      head: [['Team ID', 'Student ID', 'Masked Reg Code', 'Auth Status', 'Queue Status', 'Queue #']],
+      head: [['Squad ID', 'NIC Number', 'Masked Reg Code', 'Auth Status', 'Queue Status', 'Queue #']],
       body: pendingTeams.map((t) => [
         t.teamId,
         t.studentId,

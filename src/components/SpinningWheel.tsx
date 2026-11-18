@@ -232,9 +232,9 @@ export const SpinningWheel: React.FC<SpinningWheelProps> = ({
           LIVE GROUP <span className="text-inno-gradient">ALLOCATION SPIN</span>
         </h2>
         <p className="mt-1.5 text-xs sm:text-sm text-[#8AA2BE]">
-          <span className="font-mono text-white">{teamId}</span> ({teamName}) · Student ID{' '}
+          <span className="font-mono text-white">{teamId}</span> ({teamName}) · NIC Number{' '}
           <span className="font-mono text-[#00E1FF]">{studentId}</span>
-          {queueNumber ? ` · FIFO Queue #${queueNumber}` : ''}
+          {queueNumber ? ` · Queue #${queueNumber}` : ''}
         </p>
       </div>
 
@@ -408,15 +408,14 @@ export const SpinningWheel: React.FC<SpinningWheelProps> = ({
               strokeOpacity="0.55"
               strokeWidth="1"
             />
-            <path d="M200 176 L216 214 L208 214 L200 194 L192 214 L184 214 Z" fill="#00E1FF" />
-            <path
-              d="M182 208 Q200 193 219 191"
-              stroke="#FFFFFF"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              fill="none"
+            <image
+              href="/innohack-logo.png"
+              x="171"
+              y="171"
+              width="58"
+              height="58"
+              preserveAspectRatio="xMidYMid meet"
             />
-            <circle cx="219" cy="191" r="2.5" fill="#7DF9FF" />
           </svg>
 
           {/* Dramatic Post-Stop Reveal Overlay */}

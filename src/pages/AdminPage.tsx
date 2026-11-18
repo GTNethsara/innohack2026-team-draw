@@ -267,7 +267,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
                 ADMIN <span className="text-inno-gradient">COMMAND CENTER</span>
               </h1>
               <p className="mt-2 text-xs text-[#8AA2BE]">
-                Sign in with the official Hackathon Organizer passcode to monitor the live FIFO
+                Sign in with the official Hackathon Organizer passcode to monitor the live
                 queue, disconnected sessions, group allocations, audit logs, and master reports.
               </p>
             </div>
@@ -385,7 +385,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
               INNOHACK <span className="text-inno-gradient">ALLOCATION COMMAND CENTER</span>
             </h1>
             <p className="mt-1 text-xs sm:text-sm text-[#8AA2BE]">
-              Shared database control plane for all 30 squads, global FIFO queue sequencing,
+              Shared database control plane for all 30 squads, global queue sequencing,
               disconnected session recovery, and official master reports.
             </p>
           </div>
@@ -467,7 +467,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
         {[
           { label: 'REGISTERED', value: String(eventSettings.totalTeams), color: 'text-white' },
           { label: 'AUTHENTICATED', value: `${authCount} / 30`, color: 'text-[#00E1FF]' },
-          { label: 'IN FIFO QUEUE', value: String(activeQueueList.length), color: 'text-amber-300' },
+          { label: 'IN QUEUE', value: String(activeQueueList.length), color: 'text-amber-300' },
           {
             label: 'DRAWS COMPLETE',
             value: `${eventSettings.completedDraws} / 30`,
@@ -599,7 +599,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
       {/* COMMAND CENTER NAVIGATION TABS */}
       <div className="mt-8 flex flex-wrap gap-2 border-b border-[#142D48] pb-3">
         {[
-          { id: 'queue' as AdminTab, label: `Live FIFO Queue (${activeQueueList.length})`, icon: Radio },
+          { id: 'queue' as AdminTab, label: `Live Queue (${activeQueueList.length})`, icon: Radio },
           { id: 'groups' as AdminTab, label: 'Group Rosters (A / B / C)', icon: Layers },
           { id: 'teams' as AdminTab, label: `All 30 Teams`, icon: Users },
           {
@@ -636,7 +636,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
                   <th className="px-4 py-3.5">Pos</th>
                   <th className="px-4 py-3.5">Ticket #</th>
                   <th className="px-4 py-3.5">Team ID</th>
-                  <th className="px-4 py-3.5">Student ID</th>
+                  <th className="px-4 py-3.5">NIC number</th>
                   <th className="px-4 py-3.5">Status</th>
                   <th className="px-4 py-3.5">Presence</th>
                   <th className="px-4 py-3.5">Joined At</th>
@@ -646,7 +646,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
                 {activeQueueList.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="px-4 py-10 text-center text-[#6B88A6]">
-                      Global FIFO queue is currently empty.
+                      Global queue is currently empty.
                     </td>
                   </tr>
                 ) : (
@@ -796,7 +796,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by Team ID, Student ID, masked code, or group..."
+                placeholder="Search by Team ID, NIC Number, masked code, or group..."
                 className="w-full rounded-xl border border-[#163352] bg-[#081525] py-2.5 pl-10 pr-4 text-xs text-white placeholder-[#567493] outline-none focus:border-[#00E1FF]"
               />
             </div>
@@ -834,7 +834,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onAdminAuthChange }) => {
                 <thead className="border-b border-[#142D48] bg-[#06111F] font-display text-[10px] tracking-[0.15em] text-[#7D97B4] uppercase">
                   <tr>
                     <th className="px-4 py-3">Team</th>
-                    <th className="px-4 py-3">Student ID</th>
+                    <th className="px-4 py-3">NIC Number</th>
                     <th className="px-4 py-3">Reg Ref</th>
                     <th className="px-4 py-3">Auth</th>
                     <th className="px-4 py-3">Queue</th>

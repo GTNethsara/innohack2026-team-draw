@@ -59,7 +59,7 @@ export const AllocationCertificate: React.FC<AllocationCertificateProps> = ({ te
           <div className="rounded-xl border border-[#16324E] bg-[#06111F]/90 p-4">
             <div className="flex items-center gap-1.5 text-[10px] font-display tracking-[0.18em] text-[#7D97B4] uppercase">
               <UserCheck className="h-3.5 w-3.5 text-[#00E1FF]" />
-              Student ID
+              NIC Number
             </div>
             <div className="mt-1.5 font-mono text-sm font-bold text-white">{team.studentId}</div>
             <div className="mt-0.5 font-mono text-[11px] text-[#6684A3]">{team.teamId}</div>
@@ -85,7 +85,7 @@ export const AllocationCertificate: React.FC<AllocationCertificateProps> = ({ te
               #{team.drawOrder ?? '-'} <span className="text-xs font-normal text-[#6684A3]">of 30</span>
             </div>
             <div className="mt-0.5 font-mono text-[11px] text-[#6684A3]">
-              FIFO Queue #{team.queueNumber ?? '-'}
+              Queue #{team.queueNumber ?? '-'}
             </div>
           </div>
 
@@ -115,14 +115,7 @@ export const AllocationCertificate: React.FC<AllocationCertificateProps> = ({ te
             Download My Team Allocation – PDF
           </button>
 
-          <button
-            type="button"
-            onClick={() => downloadTeamAllocationCsv(team)}
-            className="btn-inno-secondary w-full sm:w-auto px-6 py-3.5 text-xs sm:text-sm"
-          >
-            <FileSpreadsheet className="h-4 w-4 text-[#00E1FF]" />
-            Download My Team Allocation – CSV
-          </button>
+          
         </div>
       </HudCard>
     </motion.div>

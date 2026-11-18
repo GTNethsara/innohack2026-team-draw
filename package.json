@@ -2,7 +2,7 @@
   "name": "innohack-team-leader-portal",
   "private": true,
   "version": "1.0.0",
-  "description": "INNOHACK Season 2026 \u2014 Team Leader Login & FIFO Live Group Allocation Portal (SLIIT Kandy Uni)",
+  "description": "INNOHACK Season 2026 \u2014 Team Leader Login & Live Group Allocation Portal (SLIIT Kandy Uni)",
   "type": "module",
   "scripts": {
     "dev": "vite",
